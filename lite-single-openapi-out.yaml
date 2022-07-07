@@ -1,0 +1,4081 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Media Owner Lite API
+  description: >
+    Viooh Central Media Owner Lite API
+
+    <table style="border-collapse:collapse;border-color:#9ABAD9;border-spacing:0" class="tg">
+      <thead>
+        <tr>
+          <th style="background-color:#65afff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;position:-webkit-sticky;position:sticky;text-align:center;top:-1px;vertical-align:top;will-change:transform;word-break:normal">
+            Version
+          </th>
+          <th style="background-color:#65afff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;position:-webkit-sticky;position:sticky;text-align:center;top:-1px;vertical-align:top;will-change:transform;word-break:normal">
+            Date
+          </th>
+          <th style="background-color:#65afff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;position:-webkit-sticky;position:sticky;text-align:center;top:-1px;vertical-align:top;will-change:transform;word-break:normal">
+            Description
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
+            1.0.0
+          </td>
+          <td style="background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
+            2021.03.18
+          </td>
+          <td style="background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
+            Initial Version
+          </td>
+        </tr>
+        <tr>
+          <td style="background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
+            1.0.1
+          </td>
+          <td style="background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
+            2021.12.23
+          </td>
+          <td style="background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
+            DELETE method for AudienceCategory in Lite-API
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  contact:
+    name: API Support
+    url: http://www.viooh.com/support
+    email: support@viooh.com
+servers:
+  - url: https://api.viooh.com/v1
+tags:
+  - name: Header
+    x-displayName: Header
+    description: >
+      For all calls made to the VIOOH API after authentication, it is mandatory
+      to include 'env-id' in the header of each call. Value of the env-id will
+      be provided by VIOOH.
+  - name: Tags
+    x-displayName: Tags
+    description: |
+      Create and manage your Tags
+  - name: DigitalSpec
+    x-displayName: Digital Spec
+    description: |
+      Create and manage your Digital Specifications
+  - name: Channel
+    x-displayName: Channels
+    description: |
+      Create and manage channels
+  - name: ProductFormat
+    x-displayName: ProductFormats
+    description: |
+      Create and manage your ProductFormats
+  - name: Asset
+    x-displayName: Assets
+    description: |
+      Create and manage your Assets
+  - name: ProductCategory
+    x-displayName: ProductCategories
+    description: |
+      Create and manage your ProductCategory
+  - name: Organisation
+    x-displayName: Organisations
+    description: |
+      Create and manage your Organisation
+  - name: Brand
+    x-displayName: Brands
+    description: |
+      Create and manage your Brands
+  - name: BrandLink
+    x-displayName: Brand Organisation Mapping
+    description: |
+      Manage which Brands belong to your Organisations
+  - name: AudienceRef
+    x-displayName: Audience Reference
+    description: |
+      Create and manage Audience Reference
+  - name: Audience
+    x-displayName: Audience
+    description: |
+      Create and Query Immutable, Versioned Audience Rulesets
+
+      An audience is defined as the population exposed to a frame. It
+      is defined by category and type:
+        - The category qualifies the population: who are they? all
+          adults, young females, old males.
+        - The type indicates if audience is quantitative (primary) or
+          qualitative (secondary).
+
+      Only primary audiences are currently being dealt with.
+
+      A market is describe by the audience of its frames. Audiences
+      are versioned so at any moment only the published version of a
+      market will be considered. This API provides transactional
+      semantics to create an empty new draft version, populate it with
+      data, and save it so that it becomes immutable. Finally a saved
+      audience version can be published.
+  - name: Deal
+    x-displayName: Deals
+    description: |
+      Deal description
+  - name: Creative
+    x-displayName: Creatives
+    description: |
+      Creative Management
+  - name: PoiCategory
+    x-displayName: Categories
+    description: |
+      Create and manage your Categories \
+      High level category for your locations. For example: Health and Beauty
+  - name: PoiSubCategory
+    x-displayName: Sub Categories
+    description: |
+      Create and manage your Sub Categories \
+      Second level category for your locations. For example: Hairdressing
+  - name: PoiBrand
+    x-displayName: Brands
+    description: |
+      Create and manage your Brands \
+      Brand level for your locations. For example: Tony & Guy
+  - name: PoiLocation
+    x-displayName: Locations
+    description: >
+      Create and manage your Locations \
+
+      These are your co-ordinates for your locations - yup! You got it. Those magical numbers to know where something is in the world
+  - name: POP
+    x-displayName: POP
+    description: |
+      Submit Proof Of Plays from digital assets
+x-tagGroups:
+  - name: Header
+    tags:
+      - Header
+  - name: Asset Management
+    tags:
+      - Tags
+      - DigitalSpec
+      - Channel
+      - ProductFormat
+      - Asset
+  - name: Point Of Interest Management
+    tags:
+      - PoiCategory
+      - PoiSubCategory
+      - PoiBrand
+      - PoiLocation
+  - name: Commercial Management
+    tags:
+      - ProductCategory
+      - Organisation
+      - Brand
+      - BrandLink
+  - name: Audience Management
+    tags:
+      - AudienceRef
+      - Audience
+  - name: Deal Management
+    tags:
+      - Deal
+  - name: Creative Management
+    tags:
+      - Creative
+  - name: Events
+    tags:
+      - POP
+components:
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: X-VIOOH-API-KEY
+      description: >
+        API Keys are provided in the request headers, they will expire,
+
+        therefore they need to be regularly rotated.
+
+        This Authentication/Authorizaion method will be used only for
+
+        specific APIs.
+
+
+        *The api key will be provided by VIOOH and support team upon registration.*
+
+
+        Example: `X-VIOOH-API-KEY: 2c5ea4c0-4067-11e9-8bad-9b1deb4d3b7d`
+    auth0:
+      description: Authorization description holder
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://auth0.com
+          scopes: {}
+paths:
+  "/assets/{asset-uuid}":
+    parameters:
+      - name: asset-uuid
+        description: String identifying asset uniquely.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Asset - Get
+      operationId: get_asset
+      description: |
+        String identifying asset uniquely.
+      tags:
+        - Asset
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Asset object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - asset_uuid
+                    properties:
+                      asset_uuid:
+                        description: String identifying asset uniquely.
+                        type: string
+                        format: asset-uuid
+                      time_zone:
+                        type: string
+                        description: Time Zone of Asset
+                  - $ref: "#/paths/~1assets~1%7Basset-uuid%7D/patch/requestBody/content/application\
+                      ~1json/schema"
+        "404":
+          description: Asset not found
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                required:
+                  - code
+                  - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+    put:
+      summary: Asset - Create or Overwrite
+      operationId: put_asset
+      description: >
+        Used to create a new asset or overwrite an existing one. \
+
+        For updating parts of your asset please see the [PATCH](#operation/patch_asset) method
+      tags:
+        - Asset
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1assets~1%7Basset-uuid%7D/patch/requestBody/content/application\
+                    ~1json/schema"
+                - type: object
+                  required:
+                    - product_format_uuid
+                    - latitude
+                    - longitude
+                    - players
+                    - digital_spec_uuid
+                    - statuses
+      responses:
+        "201":
+          description: Asset created
+        "204":
+          description: Asset updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: Asset - Update
+      operationId: patch_asset
+      description: |
+        Used to update parts of your asset
+      tags:
+        - Asset
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  description: A CommonLocation object. Describes the asset address.
+                  allOf:
+                    - type: object
+                      description: Address information using the xNAL standard
+                      properties:
+                        thoroughfare:
+                          description: Street address.
+                          type: string
+                        administrative_area:
+                          description: State / Province / Region / District
+                          type: string
+                        locality:
+                          description: City / Town
+                          type: string
+                        postal_code:
+                          description: Postal code / ZIP code
+                          type: string
+                        country:
+                          description: Country ISO-3166 code
+                          type: string
+                          format: ISO-3166
+                latitude:
+                  description: Geographic latitude in degrees. To six decimal places only.
+                  type: number
+                  format: double
+                longitude:
+                  description: Geographic longitude in degrees. To six decimal places only.
+                  type: number
+                  format: double
+                indoor:
+                  type: boolean
+                  description: Whether Asset indoor or outdoor
+                deal_api_enabled:
+                  type: boolean
+                  description: Whether Asset is allowed for DV360
+                asset_type:
+                  type: string
+                  default: DIGITAL
+                  enum:
+                    - STATIC
+                    - SCROLLING
+                    - DIGITAL
+                  description: Type of Asset. For Digital asset, the associated ProductFormat must
+                    be digital and vs.
+                venue_type:
+                  type: string
+                  enum:
+                    - OOH_VENUE_UNSPECIFIED
+                    - OOH_VENUE_AIRBORNE
+                    - OOH_VENUE_AIRPORTS_GENERAL
+                    - OOH_VENUE_AIRPORTS_BAGGAGE_CLAIM
+                    - OOH_VENUE_AIRPORTS_TERMINAL
+                    - OOH_VENUE_AIRPORTS_LOUNGES
+                    - OOH_VENUE_ATMS
+                    - OOH_VENUE_BACKLIGHTS
+                    - OOH_VENUE_BARS
+                    - OOH_VENUE_BENCHES
+                    - OOH_VENUE_BIKE_RACKS
+                    - OOH_VENUE_BULLETINS
+                    - OOH_VENUE_BUSES
+                    - OOH_VENUE_CAFES
+                    - OOH_VENUE_CASUAL_DINING_RESTAURANTS
+                    - OOH_VENUE_CHILD_CARE
+                    - OOH_VENUE_CINEMA
+                    - OOH_VENUE_CITY_INFORMATION_PANELS
+                    - OOH_VENUE_CONVENIENCE_STORES
+                    - OOH_VENUE_DEDICATED_WILD_POSTING
+                    - OOH_VENUE_DOCTORS_OFFICES_GENERAL
+                    - OOH_VENUE_DOCTORS_OFFICES_OBSTETRICS
+                    - OOH_VENUE_DOCTORS_OFFICES_PEDIATRICS
+                    - OOH_VENUE_FAMILY_ENTERTAINMENT
+                    - OOH_VENUE_FERRIES
+                    - OOH_VENUE_FINANCIAL_SERVICES
+                    - OOH_VENUE_GAS_STATIONS
+                    - OOH_VENUE_GOLF_COURSES
+                    - OOH_VENUE_GYMS
+                    - OOH_VENUE_HOSPITALS
+                    - OOH_VENUE_HOTELS
+                    - OOH_VENUE_JUNIOR_POSTERS
+                    - OOH_VENUE_KIOSKS
+                    - OOH_VENUE_MALLS_GENERAL
+                    - OOH_VENUE_MALLS_FOOD_COURTS
+                    - OOH_VENUE_MARINE
+                    - OOH_VENUE_MOBILE_BILLBOARDS
+                    - OOH_VENUE_MOVIE_THEATER_LOBBIES
+                    - OOH_VENUE_NEWSSTANDS
+                    - OOH_VENUE_OFFICE_BUILDINGS
+                    - OOH_VENUE_PHONE_KIOSKS
+                    - OOH_VENUE_POSTERS
+                    - OOH_VENUE_QSR
+                    - OOH_VENUE_RAIL
+                    - OOH_VENUE_RECEPTACLES
+                    - OOH_VENUE_RESORTS
+                    - OOH_VENUE_RETAIL
+                    - OOH_VENUE_SALONS
+                    - OOH_VENUE_SHELTERS
+                    - OOH_VENUE_SPORTS_ARENAS
+                    - OOH_VENUE_SUBWAY
+                    - OOH_VENUE_TAXIS
+                    - OOH_VENUE_TRUCKSIDE
+                    - OOH_VENUE_UNIVERSITIES
+                    - OOH_VENUE_URBAN_PANELS
+                    - OOH_VENUE_VETERINARIAN_OFFICES
+                    - OOH_VENUE_WALLS
+                    - OOH_VENUE_OTHER
+                  description: Venue Type of Asset
+                frame_alt_code:
+                  type: string
+                  description: FrameAltCode of Asset
+                product_format_uuid:
+                  description: Reference to the ProductFormat object. Product Format that this
+                    asset belongs to.
+                  type: string
+                  format: product-format-uuid
+                tags:
+                  description: An array of AssetTag object. Defines the existence of tags for a
+                    asset.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - start_date
+                      - end_date
+                      - tag_uuid
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the tag begins. StartDate must always be a
+                          Monday.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the tag ends. EndDate must always be a
+                          Sunday.
+                        type: string
+                        format: date
+                      tag_uuid:
+                        description: Tag object which is referenced.
+                        type: string
+                        format: tag-uuid
+                statuses:
+                  description: An array of AssetStatus object.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - start_date
+                      - end_date
+                      - status
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the status begins.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the status ends.
+                        type: string
+                        format: date
+                      status:
+                        description: "Asset status.  Enumeration - allowable values: MOUNTED = asset
+                          (frame) is available for booking DISMOUNTED = asset is
+                          not available For an asset to be booked it has to be
+                          ​MOUNTED ​ during the whole duration it is booked. A
+                          period with undefined status is considered
+                          ​DISMOUNTED."
+                        type: string
+                        format: enum
+                        enum:
+                          - MOUNTED
+                          - DISMOUNTED
+                time_models:
+                  description: An array of AssetTimeModel object.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - start_date
+                      - end_date
+                      - days
+                      - start_offset
+                      - end_offset
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the period of time begins.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the period of time ends.
+                        type: string
+                        format: date
+                      days:
+                        description: An array of ​CommonDays ​ object. Week days, on which the period of
+                          time is available.
+                        allOf:
+                          - $ref: "#/paths/~1deals~1%7Bdeal-uuid%7D/put/requestBody/content/application~1js\
+                              on/schema/properties/days"
+                      start_offset:
+                        description: Beginning of the period of time in seconds after midnight (Local
+                          time).
+                        type: number
+                        format: int32
+                      end_offset:
+                        description: Last second of the period of time in seconds after midnight (Local
+                          time).
+                        type: number
+                        format: int32
+                allotment:
+                  description: An array of AssetAllotment object.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - start_date
+                      - end_date
+                      - days
+                      - start_offset
+                      - end_offset
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the allotment begins.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the allotment ends.
+                        type: string
+                        format: date
+                      days:
+                        description: An array of CommonDays object. Week days, on which the allotment is
+                          available.
+                        allOf:
+                          - $ref: "#/paths/~1deals~1%7Bdeal-uuid%7D/put/requestBody/content/application~1js\
+                              on/schema/properties/days"
+                      start_offset:
+                        description: Beginning of the allotment in seconds after midnight (Local time).
+                        type: number
+                        format: int32
+                      end_offset:
+                        description: Last second of the allotment in seconds after midnight (Local
+                          time).
+                        type: number
+                        format: int32
+                      sot:
+                        description: Share of time allotted during the allotment, SOT value can be
+                          between 0 and 100.
+                        type: number
+                        format: double
+                price:
+                  description: An array of AssetPrice object.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - floor_cpm
+                      - start_date
+                      - end_date
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the price setting begins. StartDate must
+                          always be a Monday.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the price setting ends. EndDate must
+                          always be a Sunday.
+                        type: string
+                        format: date
+                      floor_cpm:
+                        description: "Minimum cost per thousand expressed in local currency (APG|SGA:
+                          CHF)."
+                        type: number
+                        format: double
+                players:
+                  description: "An array of DigitalPlayer object. Allocates digital players to the
+                    asset. Comment : Will not be used in APG|SGA dummy player
+                    will be provided"
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - digital_unit_uuid
+                      - digital_player_uuid
+                    properties:
+                      digital_unit_uuid:
+                        description: String uniquely identifying display controlled by player.
+                        type: integer
+                        format: int32
+                        minimum: 0
+                      digital_player_uuid:
+                        description: String uniquely identifying player.
+                        type: integer
+                        format: int32
+                        minimum: 0
+                      backup:
+                        description: "If false: regular player; if true:player server as backup for
+                          another player."
+                        type: boolean
+                        default: false
+                      in_use:
+                        type: boolean
+                        default: true
+                digital_spec_uuid:
+                  description: Reference to a DigitalSpec object. Describes technical
+                    characteristics of an asset.
+                  type: string
+                  format: digital-spec-uuid
+                prohibitions:
+                  description: An array of AssetProhibition object.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - product_category_uuid
+                      - start_date
+                      - end_date
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the prohibition begins. StartDate must always
+                          be a Monday.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the prohibition ends. EndDate must always
+                          be a Sunday.
+                        type: string
+                        format: date
+                      product_category_uuid:
+                        description: String uniquely identifying product-category.
+                        type: string
+                prohibition_counters:
+                  description: An array of AssetProhibitionCounter object.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - product_category_uuid
+                      - start_date
+                      - end_date
+                      - organisation_uuid
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the prohibition begins. StartDate must always
+                          be a Monday.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the prohibition ends. EndDate must always
+                          be a Sunday.
+                        type: string
+                        format: date
+                      product_category_uuid:
+                        description: String uniquely identifying product-category.
+                        type: string
+                      organisation_uuid:
+                        description: String uniquely identifying organisation.
+                        type: string
+                        format: organisation-uuid
+                blacklists:
+                  description: An array of AssetBlacklist object.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - start_date
+                      - end_date
+                      - organisation_uuid
+                    properties:
+                      start_date:
+                        description: Date (a day) on which the ban begins. StartDate must always be a
+                          Monday.
+                        type: string
+                        format: date
+                      end_date:
+                        description: Date (the last day) where the ban ends. EndDate must always be a
+                          Sunday.
+                        type: string
+                        format: date
+                      organisation_uuid:
+                        description: Reference to an ​Organisation ​ object. Organisation which is
+                          banned.
+                        type: string
+                        format: organisation-uuid
+      responses:
+        "204":
+          description: Asset updated
+        "404":
+          description: Asset not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/audiences/{audience-category-group-uuid}":
+    parameters:
+      - name: audience-category-group-uuid
+        description: String uniquely identifying audience category group; it stays the
+          same for different versions.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: AudienceCategoryGroup - Get
+      operationId: get_audience_category_group
+      description: |
+        Used to to get a AudienceCategoryGroup
+      tags:
+        - AudienceRef
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: AudienceCategoryGroup object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - audience_category_group_uuid
+                    properties:
+                      audience_category_group_uuid:
+                        description: String uniquely identifying audience category group; it stays the
+                          same for different versions
+                        type: string
+                        format: audience-category-group-uuid
+                  - type: object
+                    properties:
+                      name:
+                        description: Name of audience category group.
+                        type: string
+                      version:
+                        description: Version of audience category group.
+                        type: string
+        "404":
+          description: AudienceCategoryGroup not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: AudienceCategoryGroup - Create or Overwrite
+      operationId: put_audience_category_group
+      description: >
+        Used to create a new Audience Category Group or overwrite an existing
+        one. \
+
+        For updating parts of your Audience Category Group please see the [PATCH](#operation/patch_audience_category_group) method
+      tags:
+        - AudienceRef
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1audiences~1%7Baudience-category-group-uuid%7D/get/responses/20\
+                    0/content/application~1json/schema/allOf/1"
+                - type: object
+                  required:
+                    - name
+                    - version
+      responses:
+        "201":
+          description: Audience Category Group created
+        "204":
+          description: Audience Category Group updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: AudienceCategoryGroup - Update
+      operationId: patch_audience_category_group
+      description: |
+        Used to update parts of your Audience Category Group
+      tags:
+        - AudienceRef
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/paths/~1audiences~1%7Baudience-category-group-uuid%7D/put/requestBody/\
+                content/application~1json/schema"
+      responses:
+        "204":
+          description: Audience Category Group updated
+        "404":
+          description: Audience Category Group not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/audiences/{audience-category-group-uuid}/categories/{audience-category-uuid}":
+    parameters:
+      - $ref: "#/paths/~1audiences~1%7Baudience-category-group-uuid%7D/parameters/0"
+      - name: audience-category-uuid
+        description: Reference to audience category this information belongs to.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: AudienceCategory - Get
+      operationId: get_audience_category
+      description: |
+        Used to to get a AudienceCategory
+      tags:
+        - AudienceRef
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: AudienceCategory object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - audience_category_uuid
+                      - audience-category-group-uuid
+                    properties:
+                      audience-category-group-uuid:
+                        description: String uniquely identifying audience category group; it stays the
+                          same for different versions.
+                        type: string
+                        format: audience-category-group-uuid
+                      audience_category_uuid:
+                        description: String uniquely identifying audience category; it stays the same
+                          for different versions.
+                        type: string
+                        format: audience-category-uuid
+                  - $ref: "#/paths/~1audiences~1%7Baudience-category-group-uuid%7D~1categories~1%7B\
+                      audience-category-uuid%7D/patch/requestBody/content/appli\
+                      cation~1json/schema"
+        "404":
+          description: AudienceCategory not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: AudienceCategory - Create or Overwrite
+      operationId: put_audience_category
+      description: >
+        Used to create a new Audience Category or overwrite an existing one. \
+
+        For updating parts of your Audience Category please see the [PATCH](#operation/patch_audience_category) method
+      tags:
+        - AudienceRef
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1audiences~1%7Baudience-category-group-uuid%7D~1categories~1%7B\
+                    audience-category-uuid%7D/patch/requestBody/content/applica\
+                    tion~1json/schema"
+                - type: object
+                  required:
+                    - name
+      responses:
+        "201":
+          description: Audience Category created
+        "204":
+          description: Audience Category updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: AudienceCategory - Update
+      operationId: patch_audience_category
+      description: |
+        Used to update parts of your Audience Category
+      tags:
+        - AudienceRef
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name of audience category.
+                  type: string
+                parent_category:
+                  type: string
+                  format: audience-category-uuid
+      responses:
+        "204":
+          description: Audience Category updated
+        "404":
+          description: Audience Category not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: AudienceCategory - Delete
+      operationId: delete_audience_category
+      description: |
+        Used to delete  Audience Category
+      tags:
+        - AudienceRef
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Audience Category delete
+        "404":
+          description: Audience Category not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/audiences/{audience-type}/assets/{market}/{asset-uuid}/categories/{category-id}":
+    post:
+      summary: Audience Market - Upload audiences
+      operationId: post_primary_audiences
+      description: |
+        Upload audience rules as the latest audience version for these
+        specific `market`, `asset-uuid`, and `category-id`. The response
+        contains the version reference. To use this endpoint you need
+        first to create a version, then you can send it rules. Finally you
+        can save the version, test it, and eventually publish it when
+        you're satisfied.
+
+        ### Rule format
+
+        Audiences are uploaded according to the format below. It is an
+        ordered array of audience rules. A rule is defined by time-related
+        properties which specify which points in time this rule refers to
+        (`:month`, `:day`, `:hour`), and impression data (`:impressions`)
+        which is a dictionary from shares of time (sot) to numbers of
+        impressions.
+
+        ### Impression number format
+
+        The audience impressions are expressed in thousands for the
+        ingestion, so that `2.3` means two thousands and three hundreds
+        impressions. Please note it's different from query endpoints which
+        return impressions per unit, so the previous quantity is rendered
+        as `2300`.
+
+        ### Evaluation order
+
+        Order is important: they are sorted from the lower priority,
+        general rules to higher priority, more specific rules. When
+        evaluating a number of impressions rules are tried in a bottom-up
+        strategy from the last rules (highest priority, most specific) to
+        the first rules (lower priority, less specific).
+
+        This means new rules added at the end of the file will take
+        precedence over older, existing rules.
+
+        When a rule is found, one can say all rules with a higher rule
+        number don't match, and all rules with a lower rule number are
+        hidden.
+
+        ### Evaluation process
+
+        Let's take an example and consider this rules for frame `"frame1"`
+        and category id `"cx1"`:
+
+        |  Month    |  DOW/DOM  | Hour | Linear/Non | SOT:1..100 |
+        |-----------|-----------|------|------------|------------|
+        |  ANY      |  ANY      | ANY  | Linear     | 1000       |
+        |  March    |  Mondays  | ANY  | Linear     | 1800       |
+        |  December |  Tuesdays | 3    | Linear     | 2          |
+        |  December |  25       | ANY  | Linear     | 7          |
+
+        This leads to the following results:
+
+          - For _Tuesday 23rd June 2020 at 23:00_ the first rule is a
+            match, so a share of time of 20% gives 200 impressions.
+
+          - For _Monday 16th March 2020 at 12:00_ the second rule is a
+            match. This match stops the search, but the first rule would
+            have matched, too. For a share of time of 20% this frame would
+            give 360 impressions.
+
+          - For _Tuesday 1st December 2020 at 03:00_ the third rule is a
+            match. The first rule could match too, but is hidden by the
+            newer third rule. A share of time of 100% on this hour yields
+            2 impressions.
+
+          - For _Friday 25th December 2020 at 01:00_ the fourth and first
+            rules match so the fourth one is elicited. A share of time of
+            100% leads to 7 impressions.
+
+        ### Rules validation
+
+        Data coercion is applied to help you ensure rules are
+        correct. Audience rules should cover a full year with no
+        gap. Impressions should be positive numbers.
+      tags:
+        - Audience
+      security:
+        - auth0: []
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            description: Type of the audience. Only primary audiences are currently
+              supported.
+            type: string
+            format: enum
+            enum:
+              - primary
+        - name: market
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Market of the audience
+            example: MARKET_CODE
+        - name: asset-uuid
+          in: path
+          required: true
+          schema:
+            description: Id of the asset. Despite of the name, no relation to
+              `java.util.UUID`.
+            type: string
+            example: frame1
+        - name: category-id
+          in: path
+          required: true
+          schema:
+            description: >
+              Audience category. It needs to match the one uploaded in the
+              Audience Reference section.
+            type: string
+            example: "1"
+            minLength: 1
+        - name: version
+          in: query
+          required: true
+          schema:
+            type: string
+            description: |
+              Specific version of audience ruleset to consider. When used as a
+              parameter, the request will be performed against the specific
+              `version`. When omitted, the latest published version will be
+              considered.
+            example: 59812qvet5ne0mgnqp4b2hap5
+      requestBody:
+        description: An array of audience rules.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  month:
+                    description: Select the month pertaining to this audience, or `any`.
+                    type: string
+                    format: enum
+                    example: april
+                    enum:
+                      - any
+                      - january
+                      - february
+                      - march
+                      - april
+                      - may
+                      - june
+                      - july
+                      - august
+                      - september
+                      - october
+                      - november
+                      - december
+                  day:
+                    description: Select the day pertaining to this audience. Can be a weekday, a day
+                      of month, or `any`.
+                    oneOf:
+                      - type: object
+                        properties:
+                          dow:
+                            description: Day of week
+                            type: string
+                            format: enum
+                            example: monday
+                            enum:
+                              - monday
+                              - tuesday
+                              - wednesday
+                              - thursday
+                              - friday
+                              - saturday
+                              - sunday
+                        required:
+                          - dow
+                      - type: object
+                        properties:
+                          dom:
+                            description: Day of month
+                            example: 14
+                            type: number
+                            format: integer
+                            minimum: 1
+                            maximum: 31
+                        required:
+                          - dom
+                      - type: string
+                        format: enum
+                        example: any
+                        enum:
+                          - any
+                  hour:
+                    description: Select the hour of the day pertaining to this audience, or `any`.
+                    example: 14
+                    oneOf:
+                      - type: number
+                        format: integer
+                        minimum: 0
+                        maximum: 23
+                      - type: string
+                        format: enum
+                        enum:
+                          - any
+                  type:
+                    description: Type of a primary audience. If linear, only one datapoint needs to
+                      be provided for 100%. If non-linear, the number of
+                      impression will be interpolated based on the nearest left
+                      and right neighbours of the requested sot.
+                    type: string
+                    format: enum
+                    enum:
+                      - linear
+                      - non-linear
+                  impressions:
+                    type: object
+                    description: >
+                      Associative array of `sot` to impressions. Keys are
+                      strings (because of JSON) representing `sot` numbers.
+                    example:
+                      "50": 3
+                      "100": 3.5
+                      "3.50": 2
+                    additionalProperties:
+                      type: number
+                      format: double
+                      minimum: 0
+                      description: Impressions ingested are expressed per thousands, meaning that a
+                        value of `2` represents two thousands viewers.
+                      example: 0.35
+              example:
+                - month: any
+                  day: any
+                  hour: any
+                  type: linear
+                  impressions:
+                    "100": 3
+                - month: september
+                  day:
+                    dow: wednesday
+                  hour: 16
+                  type: non-linear
+                  impressions:
+                    "100": 2.1488255192684806
+                    "10.5": 0.8687473822227199
+                    "20.2": 1.3924244031817605
+                    "70.3": 2.1236790784227195
+                - month: march
+                  day:
+                    dom: 24
+                  hour: 4
+                  type: non-linear
+                  impressions:
+                    "5": 0
+                    "10": 0
+                    "12": 0
+                    "15": 0
+                    "20": 0
+                    "25": 0
+                    "30": 0
+                    "33": 0
+                    "40": 0
+                    "50": 0
+                    "60": 0
+                    "66": 0
+                    "70": 0
+                    "80": 0
+                    "100": 0
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - message
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                required:
+                  - code
+                  - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+    get:
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - name: market
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+        - name: asset-uuid
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/2/schema"
+        - name: category-id
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/3/schema"
+        - name: local-date-time
+          in: query
+          required: false
+          schema:
+            type: string
+            format: local-date-time
+            minLength: 16
+            maxLength: 16
+            example: 2020-10-25T16:54
+            description: Point in time, expressed in the local timezone of the frame. Only
+              the precision to the hour will currently be considered.
+        - name: sot
+          in: query
+          required: false
+          schema:
+            type: number
+            format: double
+            minimum: 0
+            maximum: 100
+            description: >
+              _Share of time_ alloted in an hour of time, expressed in
+              percentage.
+
+
+              - A value of `0.02777777778` % means 1 second every hour
+
+              - A value of `1.6666666667` % means 1 minute every hour
+
+              - A value of `50` % means 30 m every hour
+
+              - A value of `100` % means 1 h every hour
+            example: 22.5
+        - name: version
+          in: query
+          required: false
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4/schema"
+      summary: Audiences - Describe
+      operationId: describe_primary_audiences
+      description: |
+        Retrieve primary audiences for given `market`, `asset-uuid`, and
+        `category-id`. Returned audiences belonged to the latest published
+        version by default, or a specific `version` if this parameter is
+        provided. The audience impressions are expressed in units.
+
+        A semantic zooming is provided to refine on `local-date-time`
+        and `sot`:
+          - When none is provided, return all the audiences as they are in
+            the database. There can be more than two thousands of them for
+            each query.
+          - When `local-date-time` is provided, return only the single,
+            most-specific matching audience.
+          - Furthermore when `sot` is provided, filter impressions of the
+            audience so that it contain only the impressions for the
+            specific `sot` value.
+
+        To be abundantly clear: when optional parameters `local-date-time`
+        and `sot` are both provided, the response will contain only one
+        audience. The field `impressions` of this audience will contain
+        only one impressions value for the given `sot`.
+      tags:
+        - Audience
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4\
+                      /schema"
+                  audience-type:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0\
+                      /schema"
+                  audiences:
+                    type: array
+                    description: Primary audience quantifies the impressions delivered by a frame.
+                      For an hour, day, and category the primary audience tells
+                      the impressions of a frame, that is to say how many
+                      impressions it delivers for some given share of time.
+                    items:
+                      type: object
+                      properties:
+                        category-id:
+                          $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                            -uuid%7D~1categories~1%7Bcategory-id%7D/post/parame\
+                            ters/3/schema"
+                        asset_uuid:
+                          $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                            -uuid%7D~1categories~1%7Bcategory-id%7D/post/parame\
+                            ters/2/schema"
+                        month:
+                          $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                            -uuid%7D~1categories~1%7Bcategory-id%7D/post/reques\
+                            tBody/content/application~1json/schema/items/proper\
+                            ties/month"
+                        day:
+                          $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                            -uuid%7D~1categories~1%7Bcategory-id%7D/post/reques\
+                            tBody/content/application~1json/schema/items/proper\
+                            ties/day"
+                        hour:
+                          $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                            -uuid%7D~1categories~1%7Bcategory-id%7D/post/reques\
+                            tBody/content/application~1json/schema/items/proper\
+                            ties/hour"
+                        type:
+                          type: string
+                          format: enum
+                          example: non-linear
+                          description: >
+                            The impressions for an ad on a frame desn't always
+                            linearly correlate to the share of time the ad is
+                            displayed. For example, if an ad is displayed all
+                            the time (`sot` = 100 %), let's say you have 2000
+                            impressions. If the same ad is display 80% of the
+                            time, it might as well have 1920 impressions.
+                          enum:
+                            - linear
+                            - non-linear
+                        impressions:
+                          type: object
+                          description: >
+                            Associative array of `sot` to impressions. Keys are
+                            strings (because of JSON) representing `sot`
+                            numbers.
+                          example:
+                            "50": 300
+                            "100": 1350
+                            "3.50": 200
+                          additionalProperties:
+                            type: number
+                            format: int
+                            minimum: 0
+                            description: Impressions are expressed per unit, meaning that a value of `2000`
+                              represents two thousands viewers.
+                            example: 350
+                        rule-number:
+                          type: number
+                          format: integer
+                          minimum: 0
+                          description: Position of the audience rule in the dataset. The first rule has is
+                            number 0. Meant to help debuging. Rules are tried
+                            from the bottom to the top, which means any rule
+                            with a higher number doesn't match the query.
+                          example: 1395
+                    minItems: 1
+                example:
+                  version: artet12
+                  audience-type: primary
+                  audiences:
+                    - category-id: "1"
+                      asset_uuid: frame1
+                      rule-number: 0
+                      month: any
+                      day: any
+                      hour: any
+                      type: linear
+                      impressions:
+                        "100": 3
+                    - category-id: "1"
+                      asset_uuid: frame1
+                      rule-number: 1
+                      month: september
+                      day:
+                        dow: wednesday
+                      hour: 16
+                      type: non-linear
+                      impressions:
+                        "100": 2.1488255192684806
+                        "10.5": 0.8687473822227199
+                        "20.2": 1.3924244031817605
+                        "70.3": 2.1236790784227195
+                    - category-id: "1"
+                      asset_uuid: frame1
+                      rule-number: 2
+                      month: march
+                      day:
+                        dom: 24
+                      hour: 4
+                      type: non-linear
+                      impressions:
+                        "5": 0
+                        "10": 0
+                        "12": 0
+                        "15": 0
+                        "20": 0
+                        "25": 0
+                        "30": 0
+                        "33": 0
+                        "40": 0
+                        "50": 0
+                        "60": 0
+                        "66": 0
+                        "70": 0
+                        "80": 0
+                        "100": 0
+              examples:
+                "Without local-date-time, without sot":
+                  value:
+                    version: 59812qvet5ne0mgnqp4b2hap5
+                    audience-type: primary
+                    audiences:
+                      - category-id: "1"
+                        asset_uuid: frame1
+                        rule-number: 0
+                        month: any
+                        day: any
+                        hour: any
+                        type: linear
+                        impressions:
+                          "100": 3
+                      - category-id: "1"
+                        asset_uuid: frame1
+                        rule-number: 1
+                        month: march
+                        day:
+                          dom: 24
+                        hour: 4
+                        type: non-linear
+                        impressions:
+                          "5": 0
+                          "10": 0
+                          "12": 900
+                          "15": 300
+                          "20": 100
+                          "25": 800
+                          "30": 0
+                          "33": 600
+                          "40": 500
+                          "50": 400
+                          "60": 200
+                          "66": 0
+                          "70": 0
+                          "80": 0
+                          "100": 700
+                      - category-id: "1"
+                        asset_uuid: frame1
+                        rule-number: 2
+                        month: april
+                        day:
+                          dom: 24
+                        hour: 4
+                        type: non-linear
+                        impressions:
+                          "5": 0
+                          "10": 0
+                          "12": 800
+                          "15": 200
+                          "20": 0
+                          "25": 700
+                          "30": 0
+                          "33": 500
+                          "40": 400
+                          "50": 300
+                          "60": 100
+                          "66": 900
+                          "100": 600
+                      - category-id: "1"
+                        asset_uuid: frame1
+                        rule-number: 3
+                        month: march
+                        day:
+                          dom: 24
+                        hour: 4
+                        type: non-linear
+                        impressions:
+                          "12": 800
+                          "13": 500
+                          "15": 200
+                          "25": 0
+                          "40": 400
+                          "45": 700
+                          "55": 300
+                          "60": 100
+                          "96": 900
+                          "100": 600
+                "With local-date-time, without sot":
+                  value:
+                    version: 59812qvet5ne0mgnqp4b2hap5
+                    audience-type: primary
+                    audiences:
+                      - category-id: "1"
+                        asset_uuid: frame1
+                        rule-number: 1
+                        month: march
+                        day:
+                          dom: 24
+                        hour: 4
+                        type: non-linear
+                        impressions:
+                          "5": 0
+                          "10": 0
+                          "12": 0
+                          "15": 0
+                          "20": 0
+                          "25": 0
+                          "30": 0
+                          "33": 0
+                          "40": 0
+                          "50": 0
+                          "60": 0
+                          "66": 0
+                          "70": 0
+                          "80": 0
+                          "100": 0
+                "With local-date-time, with sot":
+                  value:
+                    version: 59812qvet5ne0mgnqp4b2hap5
+                    audience-type: primary
+                    audiences:
+                      - category-id: "1"
+                        asset_uuid: frame1
+                        rule-number: 1
+                        month: march
+                        day:
+                          dom: 24
+                        hour: 4
+                        type: non-linear
+                        impressions:
+                          "22.5": 425
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Parsing error:
+                  value:
+                    data:
+                      value:
+                        local-date-time: a
+                        sot: a
+                      humanized:
+                        local-date-time:
+                          - should represent a date
+                        sot:
+                          - should be number
+                    message: Parsing error
+                Inconsistent arguments:
+                  value:
+                    data: {}
+                    message: Parameter `sot` is provided without `local-date-time`.
+              schema:
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                "No matching rules, request falling through the net":
+                  value:
+                    data: {}
+                    message: No matching rules for this given local-date-time
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+  "/audiences/{audience-type}/{market}/impressions/_query":
+    post:
+      summary: Impressions - Query
+      description: >
+        Query endpoint to retrieve impressions and perform aggregate
+        computations of them.
+
+
+        Parameters `local-date-time` and `local-date-time-range` are mutually exclusive.
+      operationId: compute_impressions
+      tags:
+        - Audience
+      security:
+        - auth0: []
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - name: market
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                asset-uuids:
+                  type: array
+                  minItems: 1
+                  items:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/2\
+                      /schema"
+                category-id:
+                  $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                    -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/3/s\
+                    chema"
+                local-date-time:
+                  $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                    -uuid%7D~1categories~1%7Bcategory-id%7D/get/parameters/4/sc\
+                    hema"
+                local-date-time-range:
+                  type: object
+                  properties:
+                    from:
+                      $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                        -uuid%7D~1categories~1%7Bcategory-id%7D/get/parameters/\
+                        4/schema"
+                    to:
+                      $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                        -uuid%7D~1categories~1%7Bcategory-id%7D/get/parameters/\
+                        4/schema"
+                sot:
+                  $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                    -uuid%7D~1categories~1%7Bcategory-id%7D/get/parameters/5/sc\
+                    hema"
+                version:
+                  $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                    -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4/s\
+                    chema"
+              example:
+                Across time range:
+                  value:
+                    asset-uuids:
+                      - frame1
+                    category-id: "1"
+                    local-date-time-range:
+                      from: 2020-10-25T16:54
+                      to: 2020-10-25T16:54
+                    sot: 12.5
+                Specific version:
+                  value:
+                    asset-uuids:
+                      - frame1
+                    category-id: "1"
+                    local-date-time: 2020-10-25T16:54
+                    sot: 12.5
+                    version: 59812qvet5ne0mgnqp4b2hap5
+                Multiple frames:
+                  value:
+                    asset-uuids:
+                      - frame1
+                      - frame2
+                      - frame3
+                    category-id: "1"
+                    local-date-time: 2020-10-25T16:54
+                    sot: 12.5
+      responses:
+        "200":
+          description: |
+            ImpressionsResponse object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total-impressions:
+                    description: Impressions expressed in unit, not per thousands. `2` means two
+                      impressions, not two thousands of impressions.
+                    x-name: impressions
+                    type: number
+                    format: int
+                    example: 1473
+                  frame-impressions:
+                    type: object
+                    description: |
+                      Associative array of `asset-uuid` to impressions.
+                    example:
+                      frame1: 200
+                      frame2: 300
+                      frame3: 1350
+                    additionalProperties:
+                      type: number
+                      format: int
+                      minimum: 0
+                      description: Impressions are expressed per unit, meaning that a value of `2000`
+                        represents two thousands viewers.
+                      example: 350
+                  rule-number:
+                    type: object
+                    description: >
+                      Associative array of `asset-uuid` to the rule-number of
+                      the matching rule. It helps to understand the result.
+                    example:
+                      frame1: 2
+                      frame2: 1
+                      frame3: 1
+                    additionalProperties:
+                      type: number
+                      format: int
+                      minimum: 0
+                      description: Rule number of the matching rule. All rules with an higher number
+                        don't match, all rules with a lower number are less
+                        specific.
+                      example: 350
+                  version:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4\
+                      /schema"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+  "/audiences/{audience-type}/{market}/versions":
+    post:
+      summary: Audience Version - Create
+      description: Create an empty new version
+      parameters:
+        - in: path
+          name: audience-type
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - in: path
+          name: market
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+        - in: query
+          name: label
+          required: false
+          schema:
+            type: string
+            x-name: version-label
+            example: r34
+            description: The user can provide any meaningful optional label.
+      operationId: post_audience_version
+      tags:
+        - Audience
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-name: version
+                properties:
+                  id:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4\
+                      /schema"
+                  created-at:
+                    type: integer
+                    format: int64
+                  status:
+                    type: string
+                    enum:
+                      - PREPARING
+                      - AWAITING_ENTRIES
+                      - SAVING
+                      - SAVED
+                      - PUBLISHING
+                      - PUBLISHED
+                      - DISCARDED
+                      - FAILED
+                    description: >
+                      - `PREPARING`: A request was made to create a new version,
+                      and the system is currently performing a set of
+                      pre-requisite operations before being able to accept data
+                      upload.
+
+                      - `AWAITING_ENTRIES`: The system has completed all the pre-requisite operations required for the version and is now ready to accept data for the version.
+
+                      - `SAVING`: A request was made to save the version. The system is currently performing operations required to mark the version as SAVED and will no longer accept updates to this version.
+
+                      - `SAVED`: The version is now final and ready to be published.
+
+                      - `PUBLISHING`: A request was made to publish a new version and the system is now performing operations required to publish the version.
+
+                      - `PUBLISHED`: The system has successfully published the version. From this point on data in this version of the dataset will be used to serve all requests made to retrieve data
+
+                      - `DISCARDED`: A request was received to discard or abort this version. This version can no longer be published for consumption.
+
+                      - `FAILED`: One of the operations in the workflow failed. Refer to the state diagram above for more info.
+                example:
+                  id: 2e0xc3scfne
+                  created-at: 123436789076
+                  status: PREPARING
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+    get:
+      summary: Audience Versions - Describe All
+      description: |
+        Describe all versions of a market.
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - name: market
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+      operationId: describe_audience_versions
+      tags:
+        - Audience
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  latest-published:
+                    type: object
+                    x-name: audience-version-description
+                    properties:
+                      version:
+                        $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                          -uuid%7D~1categories~1%7Bcategory-id%7D/post/paramete\
+                          rs/4/schema"
+                      audience-type:
+                        $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                          -uuid%7D~1categories~1%7Bcategory-id%7D/post/paramete\
+                          rs/0/schema"
+                      market:
+                        $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                          -uuid%7D~1categories~1%7Bcategory-id%7D/post/paramete\
+                          rs/1/schema"
+                      label:
+                        $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions/post/pa\
+                          rameters/2/schema"
+                      status:
+                        $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions/post/re\
+                          sponses/200/content/application~1json/schema/properti\
+                          es/status"
+                      operation-log:
+                        $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions~1%7Bver\
+                          sion%7D/get/responses/200/content/application~1json/s\
+                          chema/properties/operation-logs/items"
+                    example:
+                      version: 59812qvet5ne0mgmqp4b2hap5
+                      audience-type: primary
+                      market: MARKET_CODE
+                      label: v2-2020-03-20-from-this-guy
+                      status: PUBLISHED
+                      operation-log:
+                        - action: publishing -> :published
+                          timestamp: 1583939635247
+                        - action: saved -> :publishing
+                          timestamp: 1583939632519
+                        - action: saving -> :saved
+                          timestamp: 1583939630160
+                        - action: awaiting-entries -> :saving
+                          timestamp: 1583939625163
+                        - action: preparing -> :awaiting-entries
+                          timestamp: 1583939620038
+                        - action: created
+                          timestamp: 1583939618857
+                  all-versions:
+                    type: array
+                    items:
+                      $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions/get/res\
+                        ponses/200/content/application~1json/schema/properties/\
+                        latest-published"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+  "/audiences/{audience-type}/{market}/versions/{version}":
+    get:
+      summary: Audience Version - Describe
+      description: |
+        Describe this version, show history
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - name: market
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+        - name: version
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4/schema"
+      operationId: get_audience_version
+      tags:
+        - Audience
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4\
+                      /schema"
+                  dataset:
+                    type: string
+                    description: |
+                      `"{{market}}-{{audience-type}}"`
+                  status:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions/post/re\
+                      sponses/200/content/application~1json/schema/properties/s\
+                      tatus"
+                  operation-logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        action:
+                          type: string
+                        timestamp:
+                          type: integer
+                          format: int64
+                      example:
+                        action: publishing -> :published
+                        timestamp: 1583939635247
+                example:
+                  id: 59812qvet5ne0mgmqp4b2hap5
+                  dataset: MARKET_CODE-primary
+                  status: published
+                  operation-logs:
+                    - action: publishing -> :published
+                      timestamp: 1583939635247
+                    - action: saved -> :publishing
+                      timestamp: 1583939632519
+                    - action: saving -> :saved
+                      timestamp: 1583939630160
+                    - action: awaiting-entries -> :saving
+                      timestamp: 1583939625163
+                    - action: preparing -> :awaiting-entries
+                      timestamp: 1583939620038
+                    - action: created
+                      timestamp: 1583939618857
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+  "/audiences/{audience-type}/{market}/versions/{version}/discard":
+    post:
+      summary: Audience Version - Discard
+      description: Discard this version. This version can no longer be published for
+        consumption.
+      operationId: audience_version_discard
+      tags:
+        - Audience
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - name: market
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+        - name: version
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4/schema"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-name: version
+                properties:
+                  id:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4\
+                      /schema"
+                  created-at:
+                    type: integer
+                    format: int64
+                  status:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions/post/re\
+                      sponses/200/content/application~1json/schema/properties/s\
+                      tatus"
+                example:
+                  id: a5e2b4
+                  created-at: 123436789076
+                  status: PENDING_DELETION
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+  "/audiences/{audience-type}/{market}/versions/{version}/publish":
+    post:
+      summary: Audience Version - Publish
+      description: |
+        Trigger the publication process, which may take some time. From
+        the moment it is completed, any audiences or impressions
+        requestion will be resolved to this version.
+      operationId: audience_version_publish
+      tags:
+        - Audience
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - name: market
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+        - name: version
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4/schema"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-name: version
+                properties:
+                  id:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4\
+                      /schema"
+                  created-at:
+                    type: integer
+                    format: int64
+                  status:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions/post/re\
+                      sponses/200/content/application~1json/schema/properties/s\
+                      tatus"
+                example:
+                  id: a5e2b4
+                  created-at: 123436789076
+                  status: PUBLISHING
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+  "/audiences/{audience-type}/{market}/versions/{version}/save":
+    post:
+      summary: Audience Version - Save
+      description: Save a version so that it may be published. Its content becomes
+        immutable.
+      operationId: audience_version_save
+      tags:
+        - Audience
+      parameters:
+        - name: audience-type
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/0/schema"
+        - name: market
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/1/schema"
+        - name: version
+          in: path
+          required: true
+          schema:
+            $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+              -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4/schema"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-name: version
+                properties:
+                  id:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                      -uuid%7D~1categories~1%7Bcategory-id%7D/post/parameters/4\
+                      /schema"
+                  created-at:
+                    type: integer
+                    format: int64
+                  status:
+                    $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1%7Bmarket%7D~1versions/post/re\
+                      sponses/200/content/application~1json/schema/properties/s\
+                      tatus"
+                example:
+                  id: a5e2b4
+                  created-at: 123436789076
+                  status: SAVING
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/paths/~1audiences~1%7Baudience-type%7D~1assets~1%7Bmarket%7D~1%7Basset\
+                  -uuid%7D~1categories~1%7Bcategory-id%7D/get/responses/400/con\
+                  tent/application~1json/schema"
+  "/brands/{brand-uuid}":
+    parameters:
+      - name: brand-uuid
+        description: String uniquely identifying brand.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Brand - Get
+      operationId: get_brand
+      description: |
+        Used to to get a Brand
+      tags:
+        - Brand
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Brand object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - brand_uuid
+                    properties:
+                      brand_uuid:
+                        description: String uniquely identifying brand.
+                        type: string
+                        format: brand-uuid
+                  - $ref: "#/paths/~1brands~1%7Bbrand-uuid%7D/patch/requestBody/content/application\
+                      ~1json/schema"
+        "404":
+          description: Brand not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Brand - Create or Overwrite
+      operationId: put_brand
+      description: >
+        Used to create a new Brand or overwrite an existing one. \
+
+        For updating parts of your Brand please see the [PATCH](#operation/patch_brand) method
+      tags:
+        - Brand
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1brands~1%7Bbrand-uuid%7D/patch/requestBody/content/application\
+                    ~1json/schema"
+                - type: object
+                  required:
+                    - name
+                    - product_category_uuid
+      responses:
+        "201":
+          description: Brand created
+        "204":
+          description: Brand updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: Brand - Update
+      operationId: patch_brand
+      description: |
+        Used to update parts of your Brand
+      tags:
+        - Brand
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - product_category_uuid
+              properties:
+                name:
+                  description: Name uniquely identifying brand.
+                  type: string
+                product_category_uuid:
+                  description: String uniquely identifying product-category.
+                  type: string
+      responses:
+        "204":
+          description: Brand updated
+        "404":
+          description: Brand not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Brand - Delete
+      operationId: delete_brand
+      description: |
+        Deletes this Brand
+      tags:
+        - Brand
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Brand deleted
+        "404":
+          description: Brand not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/brands/{brand-uuid}/organisations/{organisation-uuid}":
+    parameters:
+      - $ref: "#/paths/~1brands~1%7Bbrand-uuid%7D/parameters/0"
+      - name: organisation-uuid
+        description: String uniquely identifying organisation.
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      summary: Organisation - Link to Brand
+      operationId: put_brand_organisation
+      description: |
+        Used to add an Organisation to a Brand
+      tags:
+        - BrandLink
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Organisation linked to Brand
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Organisation - Unlink to Brand
+      operationId: delete_brand_organisation
+      description: |
+        Removes Organistion from Brand
+      tags:
+        - BrandLink
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Organisation removed from brand
+        "404":
+          description: Brand or Organisation not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/channels/{channel-uuid}":
+    parameters:
+      - name: channel-uuid
+        description: String uniquely identifying channel
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Channel - Get
+      operationId: get_channel
+      description: |
+        Used to to get a Channel
+      tags:
+        - Channel
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Channel object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - channel_uuid
+                    properties:
+                      channel_uuid:
+                        description: String uniquely identifying channel.
+                        type: string
+                        format: channel-uuid
+                  - $ref: "#/paths/~1channels~1%7Bchannel-uuid%7D/patch/requestBody/content/applica\
+                      tion~1json/schema"
+        "404":
+          description: Channel not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Channel - Create or Overwrite
+      operationId: put_channel
+      description: >
+        Used to create a new Channel or overwrite an existing one. \
+
+        For updating parts of your channel please see the [PATCH](#operation/patch_channel) method
+      tags:
+        - Channel
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1channels~1%7Bchannel-uuid%7D/patch/requestBody/content/applica\
+                    tion~1json/schema"
+                - type: object
+                  required:
+                    - name
+                    - audience_category_uuid
+      responses:
+        "201":
+          description: Channel created
+        "204":
+          description: Channel updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: Channel - Update
+      operationId: patch_channel
+      description: |
+        Used to update parts of your Channel
+      tags:
+        - Channel
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name uniquely identifying a channel.
+                  type: string
+                audience_category_uuid:
+                  description: References the default audience category used to compute
+                    impressions for frames in the channel. It is applicable if
+                    no audience category is specified.  The audience category
+                    with the largest audience within the audience category group
+                    should be selected - e.g. one with a demography like "all
+                    adults" or "all males and females".
+                  type: string
+                  format: audience-category-uuid
+      responses:
+        "204":
+          description: Channel updated
+        "404":
+          description: Channel not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Channel - Delete
+      operationId: delete_channel
+      description: |
+        Deletes this channel
+      tags:
+        - Channel
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Channel deleted
+        "404":
+          description: Channel not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/channels/{channel-uuid}/product_format/{product-format-uuid}":
+    parameters:
+      - $ref: "#/paths/~1channels~1%7Bchannel-uuid%7D/parameters/0"
+      - name: product-format-uuid
+        description: String uniquely identifying product format.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ProductFormat - Get
+      operationId: get_product_format
+      description: |
+        Used to to get a ProductFormat
+      tags:
+        - ProductFormat
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: ProductFormat object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - product_format_uuid
+                    properties:
+                      product_format_uuid:
+                        description: String uniquely identifying product format.
+                        type: string
+                        format: product-format-uuid
+                  - $ref: "#/paths/~1channels~1%7Bchannel-uuid%7D~1product_format~1%7Bproduct-forma\
+                      t-uuid%7D/put/requestBody/content/application~1json/schem\
+                      a"
+        "404":
+          description: ProductFormat not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: ProductFormat - Create or Overwrite
+      operationId: put_product_format
+      description: |
+        Used to create a new Product Format or overwrite an existing one.
+      tags:
+        - ProductFormat
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying this product format.
+                  type: string
+                digital:
+                  type: boolean
+                  default: true
+                  description: Product Format is Digital or not
+                periodType:
+                  type: string
+                  default: SPAN
+                  enum:
+                    - SPAN
+                    - DAYPART
+                    - DAY
+                    - WEEK
+                    - WEEK_OFFSET
+                  description: period Type of the Product Format
+      responses:
+        "201":
+          description: Product Format created
+        "204":
+          description: Product Format updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: ProductFormat - Delete
+      operationId: delete_product_format
+      description: |
+        Deletes this Product Format
+      tags:
+        - ProductFormat
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Product Format deleted
+        "404":
+          description: Product Format not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/creatives/{creative-uuid}":
+    parameters:
+      - name: creative-uuid
+        description: unique creative-uuid doc
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Creative - Get
+      operationId: get_creative
+      description: |
+        Used to to get a Creative
+      tags:
+        - Creative
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Creative object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - creative_uuid
+                    properties:
+                      creative_uuid:
+                        type: string
+                        format: creative-uuid
+                  - $ref: "#/paths/~1creatives~1%7Bcreative-uuid%7D/put/requestBody/content/applica\
+                      tion~1json/schema"
+        "404":
+          description: Creative not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Creative - Create or Overwrite
+      operationId: put_creative
+      description: >
+        Used to submit a new creative \
+
+        For updating parts of your creative please see the [PATCH](#operation/patch_creative) method
+      tags:
+        - Creative
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - iabCategoryCode
+                - dspCode
+                - creative-uuid
+                - creativeURL
+              properties:
+                iabCategoryCode:
+                  description: iabCategory of the Brand or deal
+                  type: array
+                  items:
+                    type: string
+                dspCode:
+                  description: DSP Code
+                  type: array
+                  items:
+                    type: string
+                creative-uuid:
+                  description: unique identifier of creative
+                  type: string
+                creativeURL:
+                  description: URL where creative is available for download
+                  type: string
+                  format: uri
+                advertiserURL:
+                  description: unique identifier of creative
+                  type: string
+                  format: uri
+                status:
+                  description: Moderation status of creative
+                  type: string
+                  format: enum
+                  enum:
+                    - PENDING
+                    - APPROVED
+                    - REJECTED
+                  default: PENDING
+                height:
+                  description: height of a creative
+                  type: number
+                  format: double
+                width:
+                  description: height of a creative
+                  type: number
+                  format: double
+                creativeType:
+                  description: Type of creative
+                  type: string
+                  format: enum
+                  enum:
+                    - VIDEO
+                    - BANNER
+      responses:
+        "201":
+          description: Creative submitted
+        "204":
+          description: Creative updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: Creative - Update
+      operationId: patch_creative
+      description: |
+        Used to update parts of creative
+      tags:
+        - Creative
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/paths/~1creatives~1%7Bcreative-uuid%7D/put/requestBody/content/applica\
+                tion~1json/schema"
+      responses:
+        "204":
+          description: Creative updated
+        "404":
+          description: Creative not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/deals/{deal-uuid}":
+    parameters:
+      - name: deal-uuid
+        description: unique deal-uuid doc
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Deal - Get
+      operationId: get_deal
+      description: |
+        Used to to get a Deal
+      tags:
+        - Deal
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Deal object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - deal_uuid
+                    properties:
+                      deal_uuid:
+                        type: string
+                        format: deal-uuid
+                  - $ref: "#/paths/~1deals~1%7Bdeal-uuid%7D/put/requestBody/content/application~1js\
+                      on/schema"
+        "404":
+          description: Deal not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Deal - Create or Overwrite
+      operationId: put_deal
+      description: >
+        Used to create a new deal \
+
+        For updating parts of your deal please see the [PATCH](#operation/patch_deal) method
+      tags:
+        - Deal
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - dealType
+                - advertiserCode
+                - brandCode
+                - iabCategoryCode
+                - startDate
+                - endDate
+                - dspCode
+                - dealName
+                - cpm
+                - status
+              properties:
+                dealType:
+                  description: Deal type - either GUARANTEED or NONGUARANTEED
+                  type: string
+                  enum:
+                    - GUARANTEED
+                    - NONGUARANTEED
+                advertiserCode:
+                  description: Advertiser code referring to Advertiser for the deal
+                  type: string
+                brandCode:
+                  description: Brand code referring to Brand for the deal
+                  type: string
+                iabCategoryCode:
+                  description: iabCategory of the Brand or deal
+                  type: string
+                startDate:
+                  description: Start Date of the deal
+                  type: string
+                  format: date
+                endDate:
+                  description: End Date of the deal
+                  type: string
+                  format: date
+                dspCode:
+                  description: DSP Code
+                  type: array
+                  items:
+                    type: string
+                dealName:
+                  description: Name / Title of the Deal
+                  type: string
+                cpm:
+                  description: CPM for the deal. Will be used as floor for Non Guaranteed deals
+                  type: number
+                  format: double
+                status:
+                  description: Status of the deal. Either PROPOSAL, BOOKED, CANCELLED, REJECTED,
+                    LIVE, ENDED
+                  type: string
+                  enum:
+                    - PROPOSAL
+                    - BOOKED
+                    - CANCELLED
+                    - REJECTED
+                    - LIVE
+                    - ENDED
+                budget:
+                  description: Budget for the deal if any
+                  type: number
+                  format: double
+                impressions:
+                  description: Total number of impressions to be targetted with the deal
+                  type: integer
+                  format: int64
+                productFormat:
+                  description: Product Format(s) to be targetted in the deal
+                  type: array
+                  items:
+                    type: string
+                    format: product-format-uuid
+                channel:
+                  description: Channel(s) to be targetted in the deal
+                  type: array
+                  items:
+                    type: string
+                    format: channel-uuid
+                location:
+                  description: location to be targetted in the deal
+                  allOf:
+                    - $ref: "#/paths/~1assets~1%7Basset-uuid%7D/patch/requestBody/content/application\
+                        ~1json/schema/properties/address/allOf/0"
+                days:
+                  type: array
+                  items:
+                    type: string
+                    format: enum
+                    enum:
+                      - MONDAY
+                      - TUESDAY
+                      - WEDNESDAY
+                      - THURSDAY
+                      - FRIDAY
+                      - SATURDAY
+                      - SUNDAY
+                hours:
+                  description: Hours to be targetted in the deal
+                  type: array
+                  items:
+                    type: number
+                    format: int32
+                    enum:
+                      - 0
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      - 13
+                      - 14
+                      - 15
+                      - 16
+                      - 17
+                      - 18
+                      - 19
+                      - 20
+                      - 21
+                      - 22
+                      - 23
+                dealID:
+                  description: OUTPUT ONLY - unique identifier of Deal
+                  type: string
+      responses:
+        "201":
+          description: Deal created
+        "204":
+          description: Deal updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: Deal - Update
+      operationId: patch_deal
+      description: |
+        Used to update parts of your deal
+      tags:
+        - Deal
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/paths/~1deals~1%7Bdeal-uuid%7D/put/requestBody/content/application~1js\
+                on/schema"
+      responses:
+        "204":
+          description: Deal updated
+        "404":
+          description: Deal not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/digital_specs/{digital-spec-uuid}":
+    parameters:
+      - name: digital-spec-uuid
+        description: String uniquely identifying digital spec.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: DigitalSpec - Get
+      operationId: get_digital_spec
+      description: |
+        Used to to get a DigitalSpec
+      tags:
+        - DigitalSpec
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: DigitalSpec object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - digital_spec_uuid
+                    properties:
+                      digital_spec_uuid:
+                        description: String uniquely identifying digital spec.
+                        type: string
+                        format: digital-spec-uuid
+                  - $ref: "#/paths/~1digital_specs~1%7Bdigital-spec-uuid%7D/patch/requestBody/conte\
+                      nt/application~1json/schema"
+        "404":
+          description: DigitalSpec not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: DigitalSpec - Create or Overwrite
+      operationId: put_digital_spec
+      description: >
+        Used to create a new Digital Spec or overwrite an existing one. \
+
+        For updating parts of your Digital Spec please see the [PATCH](#operation/patch_digital_spec) method
+      tags:
+        - DigitalSpec
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1digital_specs~1%7Bdigital-spec-uuid%7D/patch/requestBody/conte\
+                    nt/application~1json/schema"
+                - type: object
+                  required:
+                    - name
+                    - width
+                    - height
+                    - motion_type
+      responses:
+        "201":
+          description: Digital Spec created
+        "204":
+          description: Digital Spec updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: DigitalSpec - Update
+      operationId: patch_digital_spec
+      description: |
+        Used to update parts of your Digital Spec
+      tags:
+        - DigitalSpec
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name uniquely identfying this object.
+                  type: string
+                width:
+                  description: Width of frame in number of pixels.
+                  type: number
+                  format: int32
+                height:
+                  description: Height of frame in number of pixels.
+                  type: number
+                  format: int32
+                min_width:
+                  description: Defines minimum acceptable width of frame in number of pixels, in
+                    case the width is smaller than the regular one, the aspect
+                    ratio must still be conserved.
+                  type: number
+                  format: int32
+                min_height:
+                  description: Defines minimum acceptable height of frame in number of pixels, in
+                    case the height is smaller than the regular one, the aspect
+                    ratio must still be conserved.
+                  type: number
+                  format: int32
+                rotation:
+                  description: "Defines rotation of content before being displayed: 0 displayed as
+                    is 90 rotated by 90 degrees before displayed Remark: VIOOH
+                    uses 90 degrees rotation for portrait"
+                  type: number
+                  format: int32
+                motion_type:
+                  description: "Enumeration - allowable values: MOVING = video STILL = picture"
+                  type: string
+                  format: enum
+                  enum:
+                    - MOVING
+                    - STILL
+                fps:
+                  type: integer
+                  format: int32
+                  minimum: 0
+                  description: Frame Per Second
+                audible:
+                  type: boolean
+                  description: Whether the frame has an audio functionality or not
+                characteristics:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        minLength: 1
+                        maxLength: 50
+                        description: Key of the Characteristic
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                        description: Value of the Characteristic
+                      type:
+                        type: string
+                        enum:
+                          - DEFAULT
+                          - DISE
+                        description: Type of the Characteristic
+                    required:
+                      - key
+                      - value
+                      - type
+                  description: List of the Characteristic
+      responses:
+        "204":
+          description: Digital Spec updated
+        "404":
+          description: Digital Spec not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: DigitalSpec - Delete
+      operationId: delete_digital_spec
+      description: |
+        Deletes this Digital Spec
+      tags:
+        - DigitalSpec
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: DigitalSpec deleted
+        "404":
+          description: DigitalSpec not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/organisations/{organisation-uuid}":
+    parameters:
+      - $ref: "#/paths/~1brands~1%7Bbrand-uuid%7D~1organisations~1%7Borganisation-uuid%\
+          7D/parameters/1"
+    get:
+      summary: Organisation - Get
+      operationId: get_organisation
+      description: |
+        Used to to get a Organisation
+      tags:
+        - Organisation
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Organisation object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - organisation_uuid
+                    properties:
+                      organisation_uuid:
+                        description: String uniquely identifying organisation.
+                        type: string
+                        format: organisation-uuid
+                  - $ref: "#/paths/~1organisations~1%7Borganisation-uuid%7D/patch/requestBody/conte\
+                      nt/application~1json/schema"
+        "404":
+          description: Organisation not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Organisation - Create or Overwrite
+      operationId: put_organisation
+      description: >
+        Used to create a new Organisation or overwrite an existing one. \
+
+        For updating parts of your Organisation please see the [PATCH](#operation/patch_organisation) method
+      tags:
+        - Organisation
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1organisations~1%7Borganisation-uuid%7D/patch/requestBody/conte\
+                    nt/application~1json/schema"
+                - type: object
+                  required:
+                    - name
+                    - organisation_type
+      responses:
+        "201":
+          description: Organisation created
+        "204":
+          description: Organisation updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: Organisation - Update
+      operationId: patch_organisation
+      description: |
+        Used to update parts of your Organisation
+      tags:
+        - Organisation
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                organisation_type:
+                  description: "Organisation type. Enumeration - allowable values: ADVERTISER =
+                    organisation, who's products are advertised, i.e. who's
+                    products appear on the creatvies AGENCY = company buying
+                    advertising services on behalf of an advertiser values (not
+                    used by APG|SGA): SPECIALIST BARTER DSP"
+                  type: string
+                  format: enum
+                  enum:
+                    - ADVERTISER
+                    - SPECIALIST
+                    - AGENCY
+                    - BARTER
+                    - DSP
+      responses:
+        "204":
+          description: Organisation updated
+        "404":
+          description: Organisation not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Organisation - Delete
+      operationId: delete_organisation
+      description: |
+        Deletes this Organisation
+      tags:
+        - Organisation
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Organisation deleted
+        "404":
+          description: Organisation not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/poi/brands/{poi-brand-uuid}":
+    parameters:
+      - name: poi-brand-uuid
+        description: String uniquely identifying poi brand.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Brand - Get
+      operationId: get_poi_brand
+      description: |
+        Used to to get a Brand
+      tags:
+        - PoiBrand
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Brand object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - poi_brand_uuid
+                    properties:
+                      poi_brand_uuid:
+                        description: String uniquely identifying poi brand.
+                        type: string
+                        format: poi-brand-uuid
+                  - $ref: "#/paths/~1poi~1brands~1%7Bpoi-brand-uuid%7D/put/requestBody/content/appl\
+                      ication~1json/schema"
+        "404":
+          description: Brand not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Brand - Create or Overwrite
+      operationId: put_poi_brand
+      description: |
+        Used to create a new Brand or overwrite an existing one.
+      tags:
+        - PoiBrand
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying poi brand.
+                  type: string
+      responses:
+        "201":
+          description: Brand created
+        "204":
+          description: Brand updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Brand - Delete
+      operationId: delete_poi_brand
+      description: |
+        Deletes this Brand
+      tags:
+        - PoiBrand
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Brand deleted
+        "404":
+          description: Brand not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/poi/categories/{poi-category-uuid}":
+    parameters:
+      - name: poi-category-uuid
+        description: String uniquely identifying poi category.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Category - Get
+      operationId: get_poi_category
+      description: |
+        Used to to get a Category
+      tags:
+        - PoiCategory
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Category object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - poi_category_uuid
+                    properties:
+                      poi_category_uuid:
+                        description: String uniquely identifying poi subcategory.
+                        type: string
+                        format: poi-category-uuid
+                  - $ref: "#/paths/~1poi~1categories~1%7Bpoi-category-uuid%7D/put/requestBody/conte\
+                      nt/application~1json/schema"
+        "404":
+          description: Category not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Category - Create or Overwrite
+      operationId: put_poi_category
+      description: |
+        Used to create a new Category or overwrite an existing one.
+      tags:
+        - PoiCategory
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying poi category.
+                  type: string
+      responses:
+        "201":
+          description: Category created
+        "204":
+          description: Category updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Category - Delete
+      operationId: delete_poi_category
+      description: |
+        Deletes this Category
+      tags:
+        - PoiCategory
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Category deleted
+        "404":
+          description: Category not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/poi/locations/{poi-location-uuid}":
+    parameters:
+      - name: poi-location-uuid
+        description: String uniquely identifying poi location.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Location - Get
+      operationId: get_poi_location
+      description: |
+        Used to to get a Location
+      tags:
+        - PoiLocation
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Location object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - poi_location_uuid
+                    properties:
+                      poi_location_uuid:
+                        description: String uniquely identifying poi location.
+                        type: string
+                        format: poi-location-category-uuid
+                  - $ref: "#/paths/~1poi~1locations~1%7Bpoi-location-uuid%7D/patch/requestBody/cont\
+                      ent/application~1json/schema"
+        "404":
+          description: Location not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Location - Create or Overwrite
+      operationId: put_poi_location
+      description: >
+        Used to create a new Location or overwrite an existing one. \
+
+        For updating parts of your Location please see the [PATCH](#operation/patch_poi_location) method
+      tags:
+        - PoiLocation
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/paths/~1poi~1locations~1%7Bpoi-location-uuid%7D/patch/requestBody/cont\
+                    ent/application~1json/schema"
+                - type: object
+                  required:
+                    - name
+                    - latitude
+                    - longitude
+      responses:
+        "201":
+          description: Location created
+        "204":
+          description: Location updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: Location - Update
+      operationId: patch_poi_location
+      description: |
+        Used to update parts of your Location
+      tags:
+        - PoiLocation
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name uniquely identifying poi location.
+                  type: string
+                latitude:
+                  description: Geographic latitude in degrees. To six decimal places only.
+                  type: number
+                  format: double
+                longitude:
+                  description: Geographic longitude in degrees. To six decimal places only.
+                  type: number
+                  format: double
+                poi_category_uuid:
+                  description: String uniquely identifying poi category.
+                  type: string
+                  format: poi-category-uuid
+                poi_sub_category_uuid:
+                  description: String uniquely identifying poi subcategory
+                  type: string
+                  format: poi-sub-category-uuid
+                poi_brand_uuid:
+                  description: String uniquely identifying poi brand.
+                  type: string
+                  format: poi-brand-uuid
+      responses:
+        "204":
+          description: Location updated
+        "404":
+          description: Location not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Location - Delete
+      operationId: delete_poi_location
+      description: |
+        Deletes this Location
+      tags:
+        - PoiLocation
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Location deleted
+        "404":
+          description: Location not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/poi/sub_categories/{poi-sub-category-uuid}":
+    parameters:
+      - name: poi-sub-category-uuid
+        description: String uniquely identifying poi subcategory.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Sub-Category - Get
+      operationId: get_poi_sub_category
+      description: |
+        Used to to get a Sub-Category
+      tags:
+        - PoiSubCategory
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Sub-Category object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - poi_sub_category_uuid
+                    properties:
+                      poi_sub_category_uuid:
+                        description: String uniquely identifying poi subcategory.
+                        type: string
+                        format: poi-sub-category-uuid
+                  - $ref: "#/paths/~1poi~1sub_categories~1%7Bpoi-sub-category-uuid%7D/put/requestBo\
+                      dy/content/application~1json/schema"
+        "404":
+          description: Sub-Category not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Sub-Category - Create or Overwrite
+      operationId: put_poi_sub_category
+      description: |
+        Used to create a new Sub-Category or overwrite an existing one.
+      tags:
+        - PoiSubCategory
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying poi subcategory.
+                  type: string
+      responses:
+        "201":
+          description: Sub-Category created
+        "204":
+          description: Sub-Category updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Sub-Category - Delete
+      operationId: delete_poi_sub_category
+      description: |
+        Deletes this Sub-Category
+      tags:
+        - PoiSubCategory
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Sub-Category deleted
+        "404":
+          description: Sub-Category not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/productCategories/{product-category-group-uuid}":
+    parameters:
+      - name: product-category-group-uuid
+        description: String uniquely identifying product-category-group.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ProductCategoryGroup - Get
+      operationId: get_product_category_group
+      description: |
+        Used to to get a ProductCategory Group
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: ProductCategoryGroup object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - product_category_group_uuid
+                    properties:
+                      product_category_group_uuid:
+                        description: String uniquely identifying product-category-group.
+                        type: string
+                        format: product-category-group-uuid
+                  - $ref: "#/paths/~1productCategories~1%7Bproduct-category-group-uuid%7D/put/reque\
+                      stBody/content/application~1json/schema"
+        "404":
+          description: ProductCategoryGroup not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: ProductCategoryGroup - Create or Overwrite
+      operationId: put_product_category_group
+      description: |
+        Used to create a new ProductCategory Group or overwrite an existing one.
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying product-category-group.
+                  type: string
+      responses:
+        "201":
+          description: ProductCategoryGroup created
+        "204":
+          description: ProductCategoryGroup updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: ProductCategoryGroup - Update
+      operationId: patch_product_category_group
+      description: |
+        Used to update parts of your ProductCategoryGroup
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/paths/~1productCategories~1%7Bproduct-category-group-uuid%7D/put/reque\
+                stBody/content/application~1json/schema"
+      responses:
+        "204":
+          description: ProductCategoryGroup updated
+        "404":
+          description: ProductCategoryGroup not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: ProductCategoryGroup - Delete
+      operationId: delete_product_category_group
+      description: |
+        Deletes this ProductCategoryGroup
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: ProductCategoryGroup deleted
+        "404":
+          description: ProductCategoryGroup not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/productCategories/{product-category-group-uuid}/categories/{product-category-uuid}":
+    parameters:
+      - $ref: "#/paths/~1productCategories~1%7Bproduct-category-group-uuid%7D/parameter\
+          s/0"
+      - name: product-category-uuid
+        description: String uniquely identifying product-category.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ProductCategory - Get
+      operationId: get_product_category
+      description: |
+        Used to to get a ProductCategory
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: ProductCategory object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - product_category_uuid
+                    properties:
+                      product_category_uuid:
+                        description: String uniquely identifying product-category.
+                        type: string
+                        format: product-category-uuid
+                  - $ref: "#/paths/~1productCategories~1%7Bproduct-category-group-uuid%7D~1categori\
+                      es~1%7Bproduct-category-uuid%7D/put/requestBody/content/a\
+                      pplication~1json/schema"
+        "404":
+          description: ProductCategory not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: ProductCategory - Create or Overwrite
+      operationId: put_product_category
+      description: |
+        Used to create a new ProductCategory or overwrite an existing one.
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying product-category.
+                  type: string
+      responses:
+        "201":
+          description: ProductCategory created
+        "204":
+          description: ProductCategory updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    patch:
+      summary: ProductCategory - Update
+      operationId: patch_product_category
+      description: |
+        Used to update parts of your ProductCategory
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/paths/~1productCategories~1%7Bproduct-category-group-uuid%7D~1categori\
+                es~1%7Bproduct-category-uuid%7D/put/requestBody/content/applica\
+                tion~1json/schema"
+      responses:
+        "204":
+          description: ProductCategory updated
+        "404":
+          description: ProductCategory not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: ProductCategory - Delete
+      operationId: delete_product_category
+      description: |
+        Deletes this ProductCategory
+      tags:
+        - ProductCategory
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: ProductCategory deleted
+        "404":
+          description: ProductCategory not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/tag_groups/{tag-group-uuid}":
+    parameters:
+      - name: tag-group-uuid
+        description: String uniquely identifying tag group.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: TagGroup - Get
+      operationId: get_tag_group
+      description: |
+        Used to to get a Tag Group
+      tags:
+        - Tags
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: TagGroup object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - tag_group_uuid
+                    properties:
+                      tag_group_uuid:
+                        description: String uniquely identifying tag group.
+                        type: string
+                        format: tag-group-uuid
+                  - $ref: "#/paths/~1tag_groups~1%7Btag-group-uuid%7D/put/requestBody/content/appli\
+                      cation~1json/schema"
+        "404":
+          description: TagGroup not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: TagGroup - Create or Overwrite
+      operationId: put_tag_group
+      description: |
+        Used to create a new Tag Group or overwrite an existing one.
+      tags:
+        - Tags
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying tag group.
+                  type: string
+      responses:
+        "201":
+          description: TagGroup created
+        "204":
+          description: TagGroup updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: TagGroup - Delete
+      operationId: delete_tag_group
+      description: |
+        Deletes this TagGroup
+      tags:
+        - Tags
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: TagGroup deleted
+        "404":
+          description: TagGroup not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+  "/tag_groups/{tag-group-uuid}/tags/{tag-uuid}":
+    parameters:
+      - $ref: "#/paths/~1tag_groups~1%7Btag-group-uuid%7D/parameters/0"
+      - name: tag-uuid
+        description: String uniquely identifying tag.
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Tag - Get
+      operationId: get_tag
+      description: |
+        Used to to get a Tag
+      tags:
+        - Tags
+      security:
+        - auth0: []
+      responses:
+        "200":
+          description: Tag object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - tag_uuid
+                    properties:
+                      tag_uuid:
+                        description: String uniquely identifying tag.
+                        type: string
+                        format: tag-uuid
+                  - $ref: "#/paths/~1tag_groups~1%7Btag-group-uuid%7D~1tags~1%7Btag-uuid%7D/put/req\
+                      uestBody/content/application~1json/schema"
+        "404":
+          description: Tag not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    put:
+      summary: Tag - Create or Overwrite
+      operationId: put_tag
+      description: |
+        Used to create a new Tag or overwrite an existing one.
+      tags:
+        - Tags
+      security:
+        - auth0: []
+      requestBody:
+        description: request body description
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  description: Name uniquely identifying tag.
+                  type: string
+      responses:
+        "201":
+          description: Tag created
+        "204":
+          description: Tag updated
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
+    delete:
+      summary: Tag - Delete
+      operationId: delete_tag
+      description: |
+        Deletes this Tag
+      tags:
+        - Tags
+      security:
+        - auth0: []
+      responses:
+        "204":
+          description: Tag deleted
+        "404":
+          description: Tag not found
+        "500":
+          $ref: "#/paths/~1assets~1%7Basset-uuid%7D/get/responses/500"
