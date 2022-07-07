@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: V1.0
   title: Media Owner Lite API
   description: >
     Viooh Central Media Owner Lite API
@@ -217,7 +217,7 @@ paths:
   "/assets/{asset-uuid}":
     parameters:
       - name: asset-uuid
-        description: String identifying asset uniquely.
+        description: UUID String identifying asset uniquely.
         in: path
         required: true
         schema:
