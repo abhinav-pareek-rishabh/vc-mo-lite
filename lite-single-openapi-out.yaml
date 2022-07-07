@@ -217,7 +217,7 @@ paths:
   "/assets/{asset-uuid}":
     parameters:
       - name: asset-uuid
-        description: UUID String identifying asset uniquely.
+        description: String identifying asset uniquely.
         in: path
         required: true
         schema:
